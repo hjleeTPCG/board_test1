@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="board.mapper.BoardMapper">
+    <select id="selectBoardList" resultType="board.dto.BoardDto">
+        <![CDATA[
+        SELECT
+            board_idx,
+            title,
+            hit_cnt,
+            created_datetime
+        FROM
+            example.t_table
+        WHERE
+            deleted_yn = 'N'
+        ORDER BY board_idx DESC
+        ]]>
+    </select>
+
+    <insert id="insertBoard" parameterType="board.dto.BoardDto">
+        <![CDATA[
+        INSERT INTO example.t_table
+        (
+            title,
+            contents,
+            created_datetime,
+            creator_id
+        )
+            VALUE
+            (
+            #{title},
+            #{contents},
+            NOW(),
+            'admin'
+            )
+        ]]>
+    </insert>
+
+    <update id="updateHitCount" parameterType="int">
+		<![CDATA[
+        UPDATE
+            example.t_table
+        SET
+            hit_cnt = hit_cnt + 1
+        WHERE
+            board_idx = #{boardIdx}
+        ]]>
+	</update>
+    <select id="selectBoardDetail" parameterType="int" resultType="board.dto.BoardDto">
+		<![CDATA[
+        SELECT
+            board_idx, title, contents, hit_cnt,
+            created_datetime,
+            creator_id
+        FROM
+            example.t_table
+        WHEREkwdasd-
+            board_idx = ${boardIdx} AND deleted_yn = 'N'
+        ]]>
+	</select>
+</mapper>
