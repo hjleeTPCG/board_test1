@@ -39,11 +39,21 @@ public class BoardController {
 
     @RequestMapping("/board/openBoardDetail.do")
     public ModelAndView openBoardDetail(@RequestParam int boardIdx) throws Exception {
-        ModelAndView mv = new ModelAndView("/board/openBoardDetail");
-
+        ModelAndView mv = new ModelAndView("/board/boardDetail");
         BoardDto board = boardService.selectBoardDetail(boardIdx);
         mv.addObject("board", board);
 
         return mv;
+    }
+    @RequestMapping("board/updateBoard.do")
+    public String updateBoard(BoardDto board) throws Exception {
+        boardService.updateBoard(board);
+        return "redirect:/board/openBoardList.do";
+    }
+
+    @RequestMapping("board/deleteBoard.do")
+    public String deleteBoard(int boardIdx) throws Exception {
+        boardService.deleteBoard(boardIdx);
+        return "redirect:/board/openBoardList.do";
     }
 }
